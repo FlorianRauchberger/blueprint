@@ -27,7 +27,7 @@ While this repository includes configuration files for **Hetzner Cloud** and **G
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/yourusername/blueprint.git
+    git clone https://github.com/FlorianRauchberger/blueprint.git
     cd blueprint
     ```
 
