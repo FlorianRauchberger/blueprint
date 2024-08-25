@@ -1,0 +1,27 @@
+---
+# This Ansible playbook is designed to verify that the hostname of each managed host 
+# matches the corresponding hostname defined in the Ansible inventory. 
+# 
+# It performs the following tasks:
+# 1. Retrieves the actual hostname of the target machine using the `hostname` command.
+# 2. Compares the retrieved hostname with the hostname specified in the inventory.
+#
+# If there is a mismatch between the two hostnames, the playbook will output debug information 
+# and cause a failure. This is particularly useful for ensuring that there are no misconfigurations 
+# in the inventory, such as incorrect IP addresses or hostnames. Running this playbook before 
+# executing other playbooks that may perform significant changes allows users to validate 
+# their environment and avoid potential issues stemming from hostname discrepancies.
+
+- name: Verify hostname
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Get the real hostname
+      command: hostname
+      register: real_hostname
+
+    - name: Check if inventory hostname matches real hostname
+      debug:
+        msg: "Local match: {{ inventory_hostname }}, Remote match: {{ real_hostname.stdout }}"
+      failed_when: real_hostname.stdout != inventory_hostname
+      when: real_hostname.stdout != inventory_hostname
