@@ -1,0 +1,54 @@
+---
+# This playbook installs the Wazuh Agent on remote systems:
+# 1. It sets variables for the Wazuh Manager IP and Agent Name.
+# 2. Installs the 'lsb-release' package on Debian-based systems if needed.
+# 3. Downloads the Wazuh agent package from the Wazuh repository.
+# 4. Installs the Wazuh agent, configuring it with the Manager's IP and the hostname.
+# 5. Removes the downloaded package file after installation.
+# 6. Reloads the systemd configuration.
+# 7. Ensures the Wazuh agent service is enabled and started.
+
+# Wazuh is an open-source Security Information and
+# Event Management (SIEM) platform that provides real-time threat detection, 
+# log analysis, and security monitoring across distributed environments, including endpoints, servers, and cloud infrastructures.
+- name: Install Wazuh Agent on remote systems
+  hosts: "servers"
+  become: yes  
+  tasks:
+    - name: Set variables for Wazuh Manager and Agent Name
+      set_fact:
+        wazuh_manager: '192.168.2.1' # Example wazuh manager IP
+        wazuh_agent_name: "{{ inventory_hostname }}" 
+
+    - name: Install lsb-release package (required by Wazuh agent)
+      apt:
+        name: lsb-release
+        state: present
+      become: yes
+      when: ansible_os_family == 'Debian'
+
+
+    - name: Download Wazuh agent package
+      shell: |
+        cd /tmp
+        wget https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.8.0-1_amd64.deb
+      args:
+        creates: /tmp/wazuh-agent_4.8.0-1_amd64.deb
+
+    - name: Install Wazuh agent package
+      shell: |
+        sudo WAZUH_MANAGER="{{ wazuh_manager }}" WAZUH_AGENT_NAME="{{ wazuh_agent_name }}" dpkg -i /tmp/wazuh-agent_4.8.0-1_amd64.deb
+
+    - name: Remove the Wazuh agent package after installation
+      file:
+        path: /tmp/wazuh-agent_4.8.0-1_amd64.deb
+        state: absent
+
+    - name: Reload systemd daemon
+      command: systemctl daemon-reload
+
+    - name: Enable Wazuh agent service
+      systemd:
+        name: wazuh-agent
+        enabled: yes
+        state: started
