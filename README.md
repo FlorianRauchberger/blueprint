@@ -1,5 +1,5 @@
 # Blueprint
-
+## Still under construction 🚧
 **Blueprint** is a centralized repository for managing HomeLab infrastructure using Infrastructure as Code (IaC). This repository is a public template derived from my private HomeLab setup, offering a structured approach to configure, automate, and manage resources.
 
 ## Overview
