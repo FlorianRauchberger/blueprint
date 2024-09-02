@@ -1,0 +1,14 @@
+{
+  "index": "Introduction",
+  "security": "Security",
+  "about": {
+    "title": "About",
+    "type": "page"
+  },
+  "contact": {
+    "title": "Contact ↗",
+    "type": "page",
+    "href": "https://rauchberger.org",
+    "newWindow": true
+  }
+}

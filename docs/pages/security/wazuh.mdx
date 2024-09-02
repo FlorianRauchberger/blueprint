@@ -1,0 +1,19 @@
+# Security Management with Wazuh
+
+Wazuh is an open-source Security Information and Event Management (SIEM) platform that enhances security across distributed environments. It offers robust capabilities for real-time threat detection, log analysis, and security monitoring for various components of your HomeLab setup including endpoints, servers, and cloud infrastructures.
+
+## Key Features of Wazuh
+
+- **Real-time Threat Detection**: Monitors system activities for suspicious behavior and alerts the security team on potential threats.
+- **Log Analysis**: Collects and analyzes logs from different sources, providing insights into security-related events.
+- **Security Monitoring**: Continuously assesses the security posture of your infrastructure, ensuring compliance with best practices and regulatory requirements.
+- **Alerting and Reporting**: Configurable alerts for immediate notification of security incidents, along with comprehensive reporting features.
+
+## Deployment with Ansible
+
+The deployment of Wazuh is managed through Ansible. The playbook (`ansible/security/install_wazuh.yml`) automates the installation and configuration of the Wazuh manager and agents across your infrastructure, ensuring consistent setup and easy scalability.
+
+## Integration with Infrastructure
+
+Wazuh seamlessly integrates with other tools within the HomeLab environment, aiding in comprehensive security monitoring while leveraging the underlying Infrastructure as Code principles.
+ 
